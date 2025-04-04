@@ -18,15 +18,19 @@ The whole system will be powered by a pair of 18650 Lithium Ion batteries in ser
 
 Circuit Diagram Documentation can be found in planning/circuit_diagrams. Custom PCB design included.
 
-- Main Body: [Circuit Diagram PDF](circuit_diagrams/TRISECT_Main.PDF)
+Main Body:
 
-- Leg: [Circuit Diagram PDF](circuit_diagrams/TRISECT_Leg.PDF)
+![Body Circuit Diagram](circuit_diagrams/body_circuit_diagram.png)
+
+Leg:
+
+![Leg Circuit Diagram](circuit_diagrams/leg_circuit_diagram.png)
 
 ## Software overview
 
 High level flowchart can be found in planning/flowcharts.
 
-- [High Level Software Flowchart PDF](flowcharts/TRISECT_High_Level_Flowchart.pdf)
+![High Level Software Flowchart](flowcharts/main_flowchart.png)
 
 The software will have at minimum 3 modes of operation:
 
@@ -46,7 +50,7 @@ The system transitions between modes based on specific commands received via the
 
 - Advanced Control: This bonus control mode will abstract away the individual joints and joint groups, relying on inverse kinematics and an advanced PID control schema to attempt to crab walk in an optimistically graceful yet quick motion.
 
-Experimental Control: This bonus control mode is the pinnical of this project. If achieved, the system will be capable of stepping utilizing the experimental gait initially designed and presented by the STriDER team at RoMeLa (UCLA (Formerly Virginia Tech) Robotics Lab). While they pioneered this gait in 2007, they never developed a system capable of performing the gait without passive dynamic locomotion. (Note: The implementation of passive dynamic locomtion was the main focus of the STriDER project. In no way am I suggesting that they failed!) I intend to implement this gait with direct drive actuation of each joint at all times. Check out the [video here!](https://youtu.be/7XsaJwKKBYo?si=tUSaFY6jGtXLBAKC "STriDER")
+- Experimental Control: This bonus control mode is the pinnacle of this project. If achieved, the system will be capable of stepping utilizing the experimental gait initially designed and presented by the STriDER team at RoMeLa (UCLA (Formerly Virginia Tech) Robotics Lab). While they pioneered this gait in 2007, they never developed a system capable of performing the gait without passive dynamic locomotion. (Note: The implementation of passive dynamic locomtion was the main focus of the STriDER project. In no way am I suggesting that they failed!) I intend to implement this gait with direct drive actuation of each joint at all times. Check out the [video here!](https://youtu.be/7XsaJwKKBYo?si=tUSaFY6jGtXLBAKC "STriDER")
 
 ## Testing Procedure
 
