@@ -1,0 +1,13 @@
+Added Component: Designator=2P_2(2PCON)
+Added Component: Designator=PCA9685_1(PCA9685)
+Added Component: Designator=VREG_2(VREG)
+Added Pin To Net: NetName=VIN_IN Pin=2P_2-1
+Added Pin To Net: NetName=GND_IN Pin=2P_2-2
+Added Pin To Net: NetName=GND Pin=NRF24l01+_1-1
+Added Pin To Net: NetName=VIN_IN Pin=VREG_2-1
+Added Pin To Net: NetName=GND_IN Pin=VREG_2-2
+Added Pin To Net: NetName=GND Pin=VREG_2-4
+Added Pin To Net: NetName=V+ Pin=PCA9685_1-6
+Added Pin To Net: NetName=V+ Pin=VREG_2-3
+Added Net: Name=V+
+Added Class: Name=TRISECT_Leg

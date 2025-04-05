@@ -1,0 +1,9 @@
+Replace Part 2P_1 2PCON in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with 2PCON from TRISECT_Custom.SchLib
+Replace Part 4P_1 4PCON in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with 4PCON from TRISECT_Custom.SchLib
+Replace Part 4P_2 4PCON in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with 4PCON from TRISECT_Custom.SchLib
+Replace Part 4P_3 4PCON in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with 4PCON from TRISECT_Custom.SchLib
+Replace Part ESP8266_1 ESP8266 in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with ESP8266 from TRISECT_Custom.SchLib
+Replace Part MPU9250_1 MPU9250 in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with MPU9250 from TRISECT_Custom.SchLib
+Replace Part MUX_1 TCA9548A in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with TCA9548A from TRISECT_Custom.SchLib
+Replace Part NRF24l01+_1 NRF24l01+ in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with NRF24l01+ from TRISECT_Custom.SchLib
+Replace Part VREG_1 VREG in C:\Users\Emmett Osborne\Documents\Projects\Tripedal Robot\PCB\TRISECT_Main\TRISECT_Main.SchDoc with VREG from TRISECT_Custom.SchLib

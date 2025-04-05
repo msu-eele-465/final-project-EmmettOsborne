@@ -1,0 +1,9 @@
+Change Physical Footprint: Designator=2P_1 Old Footprint=2PCON New Footprint=2PCON
+Change Physical Footprint: Designator=4P_1 Old Footprint=4PCON New Footprint=4PCON
+Change Physical Footprint: Designator=4P_2 Old Footprint=4PCON New Footprint=4PCON
+Change Physical Footprint: Designator=4P_3 Old Footprint=4PCON New Footprint=4PCON
+Change Physical Footprint: Designator=ESP8266_1 Old Footprint=ESP8266 New Footprint=ESP8266
+Change Physical Footprint: Designator=MPU9250_1 Old Footprint=MPU9250 New Footprint=MPU9250
+Change Physical Footprint: Designator=MUX_1 Old Footprint=TCA9548A New Footprint=TCA9548A
+Change Physical Footprint: Designator=NRF24l01+_1 Old Footprint=NRF24l01+ New Footprint=NRF24l01+
+Change Physical Footprint: Designator=VREG_1 Old Footprint=VREG New Footprint=VREG

@@ -1,0 +1,21 @@
+Added Component: Designator=ESP8266_1(ESP8266)
+Added Component: Designator=PCA9685_1(PCA9685)
+Added Pin To Net: NetName=GND Pin=ESP8266_1-14
+Added Pin To Net: NetName=GND Pin=ESP8266_1-22
+Added Pin To Net: NetName=GND Pin=ESP8266_1-29
+Added Pin To Net: NetName=GND Pin=PCA9685_1-1
+Added Net: Name=GND
+Added Pin To Net: NetName=NetESP8266_1_10 Pin=ESP8266_1-10
+Added Pin To Net: NetName=NetESP8266_1_10 Pin=PCA9685_1-11
+Added Net: Name=NetESP8266_1_10
+Added Pin To Net: NetName=NetESP8266_1_11 Pin=ESP8266_1-11
+Added Pin To Net: NetName=NetESP8266_1_11 Pin=PCA9685_1-7
+Added Net: Name=NetESP8266_1_11
+Added Pin To Net: NetName=NetESP8266_1_17 Pin=ESP8266_1-17
+Added Pin To Net: NetName=NetESP8266_1_17 Pin=PCA9685_1-9
+Added Net: Name=NetESP8266_1_17
+Added Pin To Net: NetName=NetESP8266_1_18 Pin=ESP8266_1-18
+Added Pin To Net: NetName=NetESP8266_1_18 Pin=PCA9685_1-10
+Added Net: Name=NetESP8266_1_18
+Added Member To Class: ClassName=TRISECT_Main Member=Component ESP8266_1 ESP8266
+Added Member To Class: ClassName=TRISECT_Main Member=Component PCA9685_1 PCA9685

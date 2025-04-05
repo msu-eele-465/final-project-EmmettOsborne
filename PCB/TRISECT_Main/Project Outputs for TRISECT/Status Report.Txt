@@ -1,0 +1,21 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of PCB Document [TRISECT_Main.PcbDoc]
+   Generated File[TRISECT_Main.GTO]
+   Generated File[TRISECT_Main.GTP]
+   Generated File[TRISECT_Main.GTS]
+   Generated File[TRISECT_Main.GTL]
+   Generated File[TRISECT_Main.GBL]
+   Generated File[TRISECT_Main.GBS]
+   Generated File[TRISECT_Main.GBP]
+   Generated File[TRISECT_Main.GBO]
+   Generated File[TRISECT_Main.GM1]
+   Generated File[TRISECT_Main.GM]
+   Generated File[TRISECT_Main.EXTREP]
+   Generated File[TRISECT_Main.REP]
+
+
+Files Generated   : 12
+Documents Printed : 0
+
+Finished Output Generation At 5:51:31 AM On 11/13/2024
