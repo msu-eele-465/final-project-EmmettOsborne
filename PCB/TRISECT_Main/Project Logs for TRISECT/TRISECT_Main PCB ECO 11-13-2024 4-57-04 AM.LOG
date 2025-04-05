@@ -1,0 +1,28 @@
+Removed Pin From Net: NetName=VIN_IN Pin= -1
+Removed Pin From Net: NetName=GND_IN Pin= -2
+Change Component Designator: OldDesignator=  NewDesignator=2P_1
+Change Component Designator: OldDesignator=ESP8266 NewDesignator=ESP8266_1
+Change Component Designator: OldDesignator=L1 NewDesignator=4P_1
+Change Component Designator: OldDesignator=L2 NewDesignator=4P_2
+Change Component Designator: OldDesignator=L3 NewDesignator=4P_3
+Change Component Designator: OldDesignator=MPU9250 NewDesignator=MPU9250_1
+Change Component Designator: OldDesignator=MUX NewDesignator=MUX_1
+Change Component Designator: OldDesignator=NRF24l01+ NewDesignator=NRF24l01+_1
+Change Component Designator: OldDesignator=VREG NewDesignator=VREG_1
+Added Component: Designator=2P_2(2PCON)
+Added Component: Designator=PCA9685_1(PCA9685)
+Added Component: Designator=VREG_2(VREG)
+Added Pin To Net: NetName=GND_IN Pin=2P_1-1
+Added Pin To Net: NetName=VIN_IN Pin=2P_1-2
+Added Pin To Net: NetName=GND_IN Pin=2P_2-1
+Added Pin To Net: NetName=VIN_IN Pin=2P_2-2
+Added Pin To Net: NetName=CE Pin=NRF24l01+_1-1
+Added Pin To Net: NetName=GND Pin=PCA9685_1-1
+Added Pin To Net: NetName=V+ Pin=PCA9685_1-6
+Added Pin To Net: NetName=VIN_IN Pin=VREG_2-1
+Added Pin To Net: NetName=GND_IN Pin=VREG_2-2
+Added Pin To Net: NetName=V+ Pin=VREG_2-3
+Added Pin To Net: NetName=GND Pin=VREG_2-4
+Added Member To Class: ClassName=TRISECT_Leg Member=Component 2P_2 2PCON
+Added Member To Class: ClassName=TRISECT_Leg Member=Component PCA9685_1 PCA9685
+Added Member To Class: ClassName=TRISECT_Leg Member=Component VREG_2 VREG

@@ -1,0 +1,79 @@
+Removed Pin From Net: NetName=GND Pin=PCA9685_1-1
+Removed Pin From Net: NetName=SCL Pin=PCA9685_1-3
+Removed Pin From Net: NetName=SDA Pin=PCA9685_1-4
+Removed Pin From Net: NetName=3V3 Pin=PCA9685_1-5
+Removed Pin From Net: NetName=GND Pin=PCA9685_1-7
+Removed Pin From Net: NetName=SCL Pin=PCA9685_1-9
+Removed Pin From Net: NetName=SDA Pin=PCA9685_1-10
+Removed Pin From Net: NetName=3V3 Pin=PCA9685_1-11
+Added Component: Designator=2P_1(2PCON)
+Added Component: Designator=4P_1(4PCON)
+Added Component: Designator=4P_2(4PCON)
+Added Component: Designator=4P_3(4PCON)
+Added Component: Designator=ESP8266_1(ESP8266)
+Added Component: Designator=MPU9250_1(MPU9250)
+Added Component: Designator=MUX_1(TCA9548A)
+Added Component: Designator=NRF24l01+_1(NRF24l01+)
+Added Component: Designator=VREG_1(VREG)
+Added Pin To Net: NetName=VIN_IN Pin=2P_1-1
+Added Pin To Net: NetName=GND_IN Pin=2P_1-2
+Added Pin To Net: NetName=3V3 Pin=4P_1-1
+Added Pin To Net: NetName=GND Pin=4P_1-2
+Added Pin To Net: NetName=L1C Pin=4P_1-3
+Added Pin To Net: NetName=L1D Pin=4P_1-4
+Added Pin To Net: NetName=3V3 Pin=4P_2-1
+Added Pin To Net: NetName=GND Pin=4P_2-2
+Added Pin To Net: NetName=L2C Pin=4P_2-3
+Added Pin To Net: NetName=L2D Pin=4P_2-4
+Added Pin To Net: NetName=3V3 Pin=4P_3-1
+Added Pin To Net: NetName=GND Pin=4P_3-2
+Added Pin To Net: NetName=L3C Pin=4P_3-3
+Added Pin To Net: NetName=L3D Pin=4P_3-4
+Added Pin To Net: NetName=3V3 Pin=ESP8266_1-10
+Added Pin To Net: NetName=GND Pin=ESP8266_1-11
+Added Pin To Net: NetName=GND Pin=ESP8266_1-14
+Added Pin To Net: NetName=VIN Pin=ESP8266_1-15
+Added Pin To Net: NetName=SCL Pin=ESP8266_1-17
+Added Pin To Net: NetName=SDA Pin=ESP8266_1-18
+Added Pin To Net: NetName=CE Pin=ESP8266_1-20
+Added Pin To Net: NetName=3V3 Pin=ESP8266_1-21
+Added Pin To Net: NetName=GND Pin=ESP8266_1-22
+Added Pin To Net: NetName=SCK Pin=ESP8266_1-23
+Added Pin To Net: NetName=MISO Pin=ESP8266_1-24
+Added Pin To Net: NetName=MOSI Pin=ESP8266_1-25
+Added Pin To Net: NetName=CSN Pin=ESP8266_1-26
+Added Pin To Net: NetName=3V3 Pin=ESP8266_1-30
+Added Pin To Net: NetName=3V3 Pin=MPU9250_1-1
+Added Pin To Net: NetName=GND Pin=MPU9250_1-2
+Added Pin To Net: NetName=SCL Pin=MPU9250_1-3
+Added Pin To Net: NetName=SDA Pin=MPU9250_1-4
+Added Pin To Net: NetName=3V3 Pin=MUX_1-1
+Added Pin To Net: NetName=GND Pin=MUX_1-2
+Added Pin To Net: NetName=SDA Pin=MUX_1-3
+Added Pin To Net: NetName=SCL Pin=MUX_1-4
+Added Pin To Net: NetName=L3C Pin=MUX_1-13
+Added Pin To Net: NetName=L3D Pin=MUX_1-14
+Added Pin To Net: NetName=L2C Pin=MUX_1-15
+Added Pin To Net: NetName=L2D Pin=MUX_1-16
+Added Pin To Net: NetName=L1C Pin=MUX_1-17
+Added Pin To Net: NetName=L1D Pin=MUX_1-18
+Added Pin To Net: NetName=CE Pin=NRF24l01+_1-1
+Added Pin To Net: NetName=GND Pin=NRF24l01+_1-1
+Added Pin To Net: NetName=SCK Pin=NRF24l01+_1-3
+Added Pin To Net: NetName=MISO Pin=NRF24l01+_1-4
+Added Pin To Net: NetName=3V3 Pin=NRF24l01+_1-5
+Added Pin To Net: NetName=CSN Pin=NRF24l01+_1-6
+Added Pin To Net: NetName=MOSI Pin=NRF24l01+_1-7
+Added Pin To Net: NetName=VIN_IN Pin=VREG_1-1
+Added Pin To Net: NetName=GND_IN Pin=VREG_1-2
+Added Pin To Net: NetName=VIN Pin=VREG_1-3
+Added Pin To Net: NetName=GND Pin=VREG_1-4
+Added Member To Class: ClassName=TRISECT_Main Member=Component 2P_1 2PCON
+Added Member To Class: ClassName=TRISECT_Main Member=Component 4P_1 4PCON
+Added Member To Class: ClassName=TRISECT_Main Member=Component 4P_2 4PCON
+Added Member To Class: ClassName=TRISECT_Main Member=Component 4P_3 4PCON
+Added Member To Class: ClassName=TRISECT_Main Member=Component ESP8266_1 ESP8266
+Added Member To Class: ClassName=TRISECT_Main Member=Component MPU9250_1 MPU9250
+Added Member To Class: ClassName=TRISECT_Main Member=Component MUX_1 TCA9548A
+Added Member To Class: ClassName=TRISECT_Main Member=Component NRF24l01+_1 NRF24l01+
+Added Member To Class: ClassName=TRISECT_Main Member=Component VREG_1 VREG
