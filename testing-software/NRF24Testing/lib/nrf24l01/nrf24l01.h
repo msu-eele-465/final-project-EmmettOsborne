@@ -4,13 +4,18 @@
 #include <stdio.h>
 #include <stdint.h>
 
+// Data rate definitions
+#define DATARATE_250KBPS 0
+#define DATARATE_1MBPS   1
+#define DATARATE_2MBPS   2
+#define RF_DATARATE_DEFAULT DATARATE_1MBPS
+
 #define STARTUP_DELAY                 150             /*in milliseconds*/
 #define POWER_DOWN_DELAY              2
 #define STANDBYI_DELAY                2
 #define PRX_MODE_DELAY                100
 #define ADDRESS_WIDTH_DEFAULT         5               /*address width in bytes, for default value*/
 #define RF_CHANNEL_DEFAULT            32        
-#define RF_DATARATE_DEFAULT           1000            /*250, 1000, 2000*/
 #define RF_PWR_DEFAULT                6               /*0, -6, -12, -18*/
 #define STATIC_PAYLOAD_WIDTH_DEFAULT  1               /*for static payload mode, configurable between 1 and 32 bytes for PRX device ONLY (RX_PW_Pn, n for data pipe n)(no register for payload length in PTX device)*/
 #define NUMBER_OF_DP_DEFAULT          1               /*number of datapipes, 1 to 6*/ 
@@ -123,7 +128,6 @@
 #define ARC_CNT_0           0
 #define RPD                 0               /*received power detector, if received power is less than -64dbm, RPD = 0*/
 #define TX_REUSE            6
-#define TX_FULL             5
 #define TX_EMPTY            4
 #define RX_FULL             1
 #define RX_EMPTY            0
@@ -178,7 +182,7 @@
 #define W_TX_PAYLOAD_NOACK  0XB0              /*used in TX mode, disables AUTOACK on this specific packet. must be first enabled in FEATURE register by setting the EN_DYN_ACK bit. if used, PTX will not wait for ACK and goes directly to standby I*/
 #define NOP_CMD             0XFF              /*might be used to read the status register*/
 
-void nrf24_reset();                            
+void nrf24_reset(void);;                            
 void nrf24_device(uint8_t device_mode, uint8_t reset_state);
 uint8_t SPI_send_command(uint8_t command);          
 void pinout_Initializer();         

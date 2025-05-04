@@ -357,24 +357,25 @@ void nrf24_address_width(uint8_t address_width)
 /*datarate settings, you can choose between 2mbps, 1mbps, 250kbps*/
 void nrf24_rf_datarate(uint8_t rf_datarate)
 {
-  nrf24_read(RF_SETUP_ADDRESS, &register_current_value, 1, CLOSE);
-  register_current_value &= ~((1 << RF_DR_LOW) | (1 << RF_DR_HIGH));
-  switch (rf_datarate)
-  {
-    case 2000:
-      register_new_value = register_current_value | (1 << RF_DR_HIGH);
-      break;
-    case 1000:
-      register_new_value = register_current_value;
-      break;
-    case 250:
-      register_new_value = register_current_value | (1 << RF_DR_LOW);
-      break;
-    default:
-      register_new_value = register_current_value;
-      break;
-  }
-  nrf24_write(RF_SETUP_ADDRESS, &register_new_value, 1, CLOSE);
+    uint8_t register_current_value, register_new_value;
+    nrf24_read(RF_SETUP_ADDRESS, &register_current_value, 1, CLOSE);
+    register_current_value &= ~((1 << RF_DR_LOW) | (1 << RF_DR_HIGH));
+    switch (rf_datarate)
+    {
+        case DATARATE_2MBPS:
+            register_new_value = register_current_value | (1 << RF_DR_HIGH);
+            break;
+        case DATARATE_1MBPS:
+            register_new_value = register_current_value;
+            break;
+        case DATARATE_250KBPS:
+            register_new_value = register_current_value | (1 << RF_DR_LOW);
+            break;
+        default:
+            register_new_value = register_current_value;
+            break;
+    }
+    nrf24_write(RF_SETUP_ADDRESS, &register_new_value, 1, CLOSE);
 }
 
 /*nrf24l01+ RF power settings. 0dbm, -6dbm, -12dbm, -18dbm*/

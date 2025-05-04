@@ -50,7 +50,11 @@ void pinout_Initializer()
 /*CSN pin manipulation to high or low (SPI on or off)*/
 void nrf24_SPI(uint8_t input)
 {
-    gpio_set_level(15, input);  // GPIO15 - CSN
+    if (input) {
+        gpio_output_conf(1 << 15, 0, 0, 0);  // Set CSN high
+    } else {
+        gpio_output_conf(0, 1 << 15, 0, 0);  // Set CSN low
+    }
 }
 
 /*1 byte SPI shift register send and receive routine*/
@@ -85,5 +89,9 @@ uint8_t SPI_send_command(uint8_t command)
 /*CE pin maniplation to high or low*/
 void nrf24_CE(uint8_t input)
 {
-    gpio_set_level(2, input);  // GPIO2 - CE
+    if (input) {
+        gpio_output_conf(1 << 2, 0, 0, 0);   // Set CE high
+    } else {
+        gpio_output_conf(0, 1 << 2, 0, 0);   // Set CE low
+    }
 }
