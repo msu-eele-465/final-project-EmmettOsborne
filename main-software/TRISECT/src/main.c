@@ -1,8 +1,8 @@
-// Forward declaration of printAngles - yea I know this isn't the best way to do it
+// Forward declaration of printAngles
 void printAngles(void);
 
 /*************************************************************
- * 1) INCLUSIONS
+ * 1) Integrated Remote + Servo Control
  *************************************************************/
 
 #include "esp_common.h"
@@ -33,7 +33,80 @@ typedef struct {
 } ServoDef_t;
 
 /*************************************************************
- * 3) REMOTE-CONTROL STATE
+ * 3) SERVO MAP & ANGLE TABLE
+ *************************************************************/
+
+// Servo map
+ServoDef_t servoMap[18] = {
+    // Servos #01..12 (two-digit)
+    {1, 1, 3, 2}, 
+    {2, 1, 3, 3}, 
+    {3, 1, 2, 4}, 
+    {4, 1, 2, 5},
+    {5, 2, 3, 2}, 
+    {6, 2, 3, 3}, 
+    {7, 2, 2, 4}, 
+    {8, 2, 2, 5},
+    {9, 3, 3, 2}, 
+    {10, 3, 3, 3}, 
+    {11, 3, 2, 4}, 
+    {12, 3, 2, 5},
+
+    // Servos #101..106 (three-digit)
+    {101, 1, 1, 0}, 
+    {102, 1, 1, 1}, 
+    {103, 2, 1, 0}, 
+    {104, 2, 1, 1},
+    {105, 3, 1, 0}, 
+    {106, 3, 1, 1}
+};
+
+// Servo angle table
+// We have 18 servos, each row has 7 columns => [18][7]
+// Index 0..6 => 45°,90°,135°,180°,225°,270°,315°
+// -1 => invalid
+int servoAngleTable[18][7] = {
+    // servo #1 Leg 1 Knee Left (index=0)
+    {133, 210, 287, 367, 448, 525, 607},
+    // servo #2 Leg 1 Knee Right (1)
+    {136, 214, 291, 369, 450, 529, 611},
+    // servo #3 Leg 1 Legg Left  (2)
+    {125, 205, 285, 366, 446, 524, 602},
+    // servo #4 Leg 1 Legg Right (3)
+    {128, 206, 282, 360, 439, 518, 601},
+    // servo #5 Leg 2 Knee Left (4)
+    {140, 220, 299, 377, 458, 535, 615},
+    // servo #6 Leg 2 Knee Right (5)
+    {136, 216, 293, 373, 454, 532, 614},
+    // servo #7 Leg 2 Legg Left (6)
+    {125, 206, 285, 363, 442, 516, 593},
+    // servo #8 Leg 2 Legg Right (7)
+    {128, 206, 282, 360, 439, 518, 601},
+    // servo #9 Leg 3 Knee Left (8)
+    {131, 211, 291, 370, 450, 526, 606},
+    // servo #10 Leg 3 Knee Right (9)
+    {125, 205, 285, 366, 446, 524, 602},
+    // servo #11 Leg 3 Legg Left (10)
+    {127, 207, 284, 362, 442, 518, 598},
+    // servo #12 Leg 3 Legg Right (11)
+    {133, 214, 294, 376, 456, 532, 610},
+
+    // servo #101 Leg 1 Hip Down (12)
+    {-1, -1, 265, 386, 507, -1, -1},
+    // servo #102 Leg 1 Hip Up (13)
+    {-1, -1, 247, 366, 483, -1, -1},
+    // servo #103 Leg 2 Hip Down (14)
+    {-1, -1, 251, 371, 490, -1, -1},
+    // servo #104 Leg 2 Hip Up (15)
+    {-1, -1, 255, 374, 493, -1, -1},
+    // servo #105 Leg 3 Hip Down (16)
+    {-1, -1, 236, 355, 475, -1, -1},
+    // servo #106 Leg 3 Hip Up (17)
+    {-1, -1, 242, 357, 480, -1, -1}
+};
+
+/*************************************************************
+ * 4) REMOTE-CONTROL STATE
  *************************************************************/
 
 // Received data struct
@@ -65,7 +138,109 @@ int angleIndexForLegJoint[3][3] = {
 int last_ch5 = 0, last_ch6 = 0, last_ch8 = 0, last_ch9 = 0, last_ch10 = 0, last_ch11 = 0;
 
 /*************************************************************
- * 4) RECEIVE DATA FUNCTIONS
+ * 5) SERVO CONTROL HELPERS
+ *************************************************************/
+
+// Helper functions
+int map(int x, int in_min, int in_max, int out_min, int out_max) {
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+void selectI2CBus(uint8_t bus) {
+    uint8_t data = 1 << bus;
+    if (pca9685_interface_iic_write_no_reg(TCA9548A_ADDR, data) != 0) {
+        printf("Failed to select I2C bus %d\n", bus);
+    }
+}
+
+ /*************************************************************
+ * 6) SET SERVO ANGLES
+ *************************************************************/
+
+void setServoAngles(int leg, int joint, int angleIndex) {
+    int normalIndex = angleIndex - 1;
+    int mirroredIndex = 6 - normalIndex;
+    for (int i = 0; i < 18; i++) {
+        if (servoMap[i].leg == leg && servoMap[i].joint == joint) {
+            bool isEven = (servoMap[i].servoID % 2 == 0);
+            int useIndex = isEven ? normalIndex : mirroredIndex;
+            int pwmVal = servoAngleTable[i][useIndex];
+            if (pwmVal != -1) {
+                int legIndex = leg - 1;
+                selectI2CBus(tcaChannelForLeg[legIndex]);
+                if (pca9685_write_channel(&pwmHandles[legIndex], servoMap[i].pcaChannel, 0, pwmVal) != 0) {
+                    printf("Failed to set PWM for servo %d\n", servoMap[i].servoID);
+                }
+            }
+        }
+    }
+}
+
+/*************************************************************
+ * 7) CHANGE ANGLE LOGIC
+ *************************************************************/
+
+void changeAngle(int increment) {
+    if (currentMode == 4) {
+        for (int legIndex = 0; legIndex < 3; legIndex++) {
+            int jIndex = currentJoint - 1;
+            angleIndexForLegJoint[legIndex][jIndex] += increment;
+            if (angleIndexForLegJoint[legIndex][jIndex] < 1) angleIndexForLegJoint[legIndex][jIndex] = 1;
+            if (angleIndexForLegJoint[legIndex][jIndex] > 7) angleIndexForLegJoint[legIndex][jIndex] = 7;
+            setServoAngles(legIndex + 1, jIndex + 1, angleIndexForLegJoint[legIndex][jIndex]);
+        }
+        printf("ANGLE %s for ALL LEGS, joint %d\n", (increment > 0) ? "++" : "--", currentJoint);
+    } else {
+        int l = currentMode - 1;
+        int j = currentJoint - 1;
+        angleIndexForLegJoint[l][j] += increment;
+        if (angleIndexForLegJoint[l][j] < 1) angleIndexForLegJoint[l][j] = 1;
+        if (angleIndexForLegJoint[l][j] > 7) angleIndexForLegJoint[l][j] = 7;
+        setServoAngles(currentMode, currentJoint, angleIndexForLegJoint[l][j]);
+        printf("ANGLE %s for leg %d, joint %d\n", (increment > 0) ? "++" : "--", currentMode, currentJoint);
+    }
+    printAngles();
+}
+
+/*************************************************************
+ * 8) REMOTE UI LOGIC
+ *************************************************************/
+
+void checkButtonsAndUpdateState(int ch5, int ch6, int ch8, int ch9, int ch10, int ch11, int ch1, int ch3) {
+    if (ch5 == 1 && last_ch5 == 0) {
+        currentMode--;
+        if (currentMode < 1) currentMode = 5;
+        printf("MODE changed => %d\n", currentMode);
+        if (currentMode == 5) {
+            for (int legIndex = 0; legIndex < 3; legIndex++) {
+                angleIndexForLegJoint[legIndex][0] = 4;
+                setServoAngles(legIndex + 1, 1, 4);
+            }
+            printf("Mode 5: Joint 1 set to 180° for all legs\n");
+        }
+    }
+    if (ch6 == 1 && last_ch6 == 0) {
+        currentMode++;
+        if (currentMode > 5) currentMode = 1;
+        printf("MODE changed => %d\n", currentMode);
+        if (currentMode == 5) {
+            for (int legIndex = 0; legIndex < 3; legIndex++) {
+                angleIndexForLegJoint[legIndex][0] = 4;
+                setServoAngles(legIndex + 1, 1, 4);
+            }
+            printf("Mode 5: Joint 1 set to 180° for all legs\n");
+        }
+    }
+    last_ch5 = ch5;
+    last_ch6 = ch6;
+    last_ch8 = ch8;
+    last_ch9 = ch9;
+    last_ch10 = ch10;
+    last_ch11 = ch11;
+}
+
+/*************************************************************
+ * 9) RECEIVE DATA FUNCTIONS
  *************************************************************/
 
 void processReceivedData(Received_data_t* data) {
@@ -136,6 +311,17 @@ void task_nrf24_receive(void* ignore) {
         }
     }
 
+    for (int i = 0; i < 18; i++) {
+        int leg = servoMap[i].leg;
+        int chan = servoMap[i].pcaChannel;
+        int pwm = servoAngleTable[i][3];
+        if (pwm != -1) {
+            int legIndex = leg - 1;
+            selectI2CBus(tcaChannelForLeg[legIndex]);
+            pca9685_write_channel(&pwmHandles[legIndex], chan, 0, pwm);
+        }
+    }
+
     Received_data_t received_data;
     while (true) {
         uint8_t result = nrf24_receive((uint8_t*)&received_data, 11);
@@ -175,7 +361,7 @@ uint32 user_rf_cal_sector_set(void) {
 }
 
 /*************************************************************
- * 5) INITIALIZE
+ * 10) INITIALIZE
  *************************************************************/
 
 void user_init(void) {
