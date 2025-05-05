@@ -123,6 +123,26 @@ uint8_t pca9685_interface_oe_gpio_write(uint8_t value) {
     return 0;
 }
 
+uint8_t pca9685_interface_iic_write_no_reg(uint8_t addr, uint8_t data) {
+    i2c_master_start();
+    // Write address with write bit
+    i2c_master_writeByte((addr << 1) | 0); 
+    if (!i2c_master_checkAck()) {
+        i2c_master_stop();
+        // Error: No ACK from device
+        return 1; 
+    }
+    i2c_master_writeByte(data);
+    if (!i2c_master_checkAck()) {
+        i2c_master_stop();
+        // Error: No ACK for data
+        return 1; 
+    }
+    i2c_master_stop();
+    // Success
+    return 0; 
+}
+
 void pca9685_interface_delay_ms(uint32_t ms) {
     os_delay_us(ms * 1000);
 }
