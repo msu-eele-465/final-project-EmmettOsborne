@@ -203,7 +203,75 @@ void changeAngle(int increment) {
 }
 
 /*************************************************************
- * 8) REMOTE UI LOGIC
+ * 8) JOYSTICK CONTROL FOR MODE 5
+ *************************************************************/
+
+int interpolatePWM(int joystickValue, int servoIdx) {
+    const int rangeBounds[] = {0, 36, 72, 108, 145, 181, 218, 255};
+    const int angleIndices[] = {6, 5, 4, 3, 2, 1, 0};
+    int rangeIdx;
+    for (rangeIdx = 0; rangeIdx < 6; rangeIdx++) {
+        if (joystickValue >= rangeBounds[rangeIdx] && joystickValue <= rangeBounds[rangeIdx + 1]) {
+            break;
+        }
+    }
+    if (rangeIdx >= 6) rangeIdx = 6;
+    bool isEven = (servoMap[servoIdx].servoID % 2 == 0);
+    int startIdx = angleIndices[rangeIdx];
+    int endIdx = (rangeIdx < 6) ? angleIndices[rangeIdx + 1] : angleIndices[rangeIdx];
+    if (!isEven) {
+        startIdx = 6 - startIdx;
+        endIdx = 6 - endIdx;
+    }
+    int pwmStart = servoAngleTable[servoIdx][startIdx];
+    int pwmEnd = servoAngleTable[servoIdx][endIdx];
+    if (pwmStart == -1 || pwmEnd == -1) {
+        return (pwmStart != -1) ? pwmStart : (pwmEnd != -1) ? pwmEnd : 0;
+    }
+    float t = (float)(joystickValue - rangeBounds[rangeIdx]) / (rangeBounds[rangeIdx + 1] - rangeBounds[rangeIdx]);
+    int pwmValue = pwmStart + t * (pwmEnd - pwmStart);
+    return pwmValue;
+}
+
+void updateJoystickControl(int ch1, int ch3) {
+    for (int i = 0; i < 18; i++) {
+        if (servoMap[i].joint == 2) {
+            int pwm = interpolatePWM(ch1, i);
+            int legIndex = servoMap[i].leg - 1;
+            selectI2CBus(tcaChannelForLeg[legIndex]);
+            pca9685_write_channel(&pwmHandles[legIndex], servoMap[i].pcaChannel, 0, pwm);
+        } else if (servoMap[i].joint == 3) {
+            int pwm = interpolatePWM(ch3, i);
+            int legIndex = servoMap[i].leg - 1;
+            selectI2CBus(tcaChannelForLeg[legIndex]);
+            pca9685_write_channel(&pwmHandles[legIndex], servoMap[i].pcaChannel, 0, pwm);
+        }
+    }
+    for (int legIndex = 0; legIndex < 3; legIndex++) {
+        angleIndexForLegJoint[legIndex][1] = map(ch1, 0, 255, 7, 1);
+        angleIndexForLegJoint[legIndex][2] = map(ch3, 0, 255, 7, 1);
+    }
+    printAngles();
+}
+
+/*************************************************************
+ * 9) PRINT ANGLE STATES
+ *************************************************************/
+
+void printAngles(void) {
+    printf("Current angle states (1..7 => 45..315°):\n");
+    for (int leg = 0; leg < 3; leg++) {
+        printf(" Leg %d: ", leg + 1);
+        for (int jt = 0; jt < 3; jt++) {
+            printf("Joint%d=%d ", jt + 1, angleIndexForLegJoint[leg][jt]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+/*************************************************************
+ * 10) REMOTE UI LOGIC
  *************************************************************/
 
 void checkButtonsAndUpdateState(int ch5, int ch6, int ch8, int ch9, int ch10, int ch11, int ch1, int ch3) {
@@ -231,6 +299,28 @@ void checkButtonsAndUpdateState(int ch5, int ch6, int ch8, int ch9, int ch10, in
             printf("Mode 5: Joint 1 set to 180° for all legs\n");
         }
     }
+    if (currentMode != 5) {
+        if (ch8 == 1 && last_ch8 == 0) {
+            currentJoint++;
+            if (currentJoint > 3) currentJoint = 3;
+            printf("JOINT changed => %d\n", currentJoint);
+        }
+        if (ch10 == 1 && last_ch10 == 0) {
+            currentJoint--;
+            if (currentJoint < 1) currentJoint = 1;
+            printf("JOINT changed => %d\n", currentJoint);
+        }
+    }
+    if (currentMode != 5) {
+        if (ch9 == 1 && last_ch9 == 0) {
+            changeAngle(-1);
+        }
+        if (ch11 == 1 && last_ch11 == 0) {
+            changeAngle(1);
+        }
+    } else {
+        updateJoystickControl(ch1, ch3);
+    }
     last_ch5 = ch5;
     last_ch6 = ch6;
     last_ch8 = ch8;
@@ -240,7 +330,7 @@ void checkButtonsAndUpdateState(int ch5, int ch6, int ch8, int ch9, int ch10, in
 }
 
 /*************************************************************
- * 9) RECEIVE DATA FUNCTIONS
+ * 11) RECEIVE DATA FUNCTIONS
  *************************************************************/
 
 void processReceivedData(Received_data_t* data) {
@@ -361,7 +451,7 @@ uint32 user_rf_cal_sector_set(void) {
 }
 
 /*************************************************************
- * 10) INITIALIZE
+ * 12) INITIALIZE
  *************************************************************/
 
 void user_init(void) {
