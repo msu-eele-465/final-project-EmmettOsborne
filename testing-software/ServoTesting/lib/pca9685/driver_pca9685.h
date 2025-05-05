@@ -278,7 +278,7 @@ typedef struct pca9685_info_s
  * @param[in] FUC pointer to an iic_write function address
  * @note      none
  */
-#define DRIVER_PCA9685_LINK_IIC_WEITE(HANDLE, FUC)          (HANDLE)->iic_write = FUC
+#define DRIVER_PCA9685_LINK_IIC_WRITE(HANDLE, FUC)          (HANDLE)->iic_write = FUC
 
 /**
  * @brief     link oe_gpio_init function
