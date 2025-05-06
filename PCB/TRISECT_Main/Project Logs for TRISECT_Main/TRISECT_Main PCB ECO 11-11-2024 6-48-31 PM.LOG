@@ -1,0 +1,15 @@
+Added Component: Designator=ESP8266_1(ESP8266)
+Added Pin To Net: NetName=GND Pin=ESP8266_1-14
+Added Pin To Net: NetName=GND Pin=ESP8266_1-22
+Added Pin To Net: NetName=GND Pin=ESP8266_1-29
+Added Net: Name=GND
+Added Pin To Net: NetName=NetESP8266_1_10 Pin=ESP8266_1-10
+Added Net: Name=NetESP8266_1_10
+Added Pin To Net: NetName=NetESP8266_1_11 Pin=ESP8266_1-11
+Added Net: Name=NetESP8266_1_11
+Added Pin To Net: NetName=NetESP8266_1_17 Pin=ESP8266_1-17
+Added Net: Name=NetESP8266_1_17
+Added Pin To Net: NetName=NetESP8266_1_18 Pin=ESP8266_1-18
+Added Net: Name=NetESP8266_1_18
+Added Class: Name=TRISECT_Main
+Added Rule: Name=Schematic Supply Nets
